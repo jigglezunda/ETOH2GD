@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GD ↔ EToH Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+    .nav {
+      display: flex;
+      background: #2d2d2d;
+    }
+    .nav button {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      background: #2d2d2d;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav button.active {
+      background: #4caf50;
+    }
+    .page {
+      display: none;
+      padding: 2rem;
+    }
+    .page.active {
+      display: block;
+    }
+    .converter {
+      margin-top: 1rem;
+    }
+    .gif-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 200px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button id="gdToetohBtn" class="active">GD → EToH</button>
+    <button id="etohTogdBtn">EToH → GD</button>
+  </div>
+
+  <div id="gdToetoh" class="page active">
+    <h1>Geometry Dash → EToH</h1>
+    <div class="converter">
+      <label for="gdDiff">Select GD Difficulty:</label>
+      <select id="gdDiff">
+        <option>Easy</option>
+        <option>Normal</option>
+        <option>Hard</option>
+        <option>Harder</option>
+        <option>Insane</option>
+        <option>Demon</option>
+      </select>
+      <button onclick="convertGD()">Convert</button>
+      <p id="gdResult"></p>
+    </div>
+  </div>
+
+  <div id="etohTogd" class="page">
+    <h1>EToH → Geometry Dash</h1>
+    <div class="converter">
+      <label for="etohTower">Select EToH Tower (Ring 1):</label>
+      <select id="etohTower">
+        <option>Tower of Anger</option>
+        <option>Tower of Madness</option>
+        <option>Tower of Rage</option>
+        <option>Tower of Keyboard Yeeting</option>
+        <option>Tower of Heck</option>
+        <option>Tower of Killjoys</option>
+        <option>Tower of Screen Punching</option>
+        <option>Tower of Stress</option>
+        <option>Tower of Eternal Suffering</option>
+      </select>
+      <button onclick="convertEToH()">Convert</button>
+      <p id="etohResult"></p>
+    </div>
+  </div>
+
+  <div class="gif-container" id="gifArea"></div>
+
+  <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+  <script>
+    // Difficulty mapping
+    const gdToetohMap = {
+      "Easy": "Effortless to Medium",
+      "Normal": "Medium to Hard",
+      "Hard": "Hard",
+      "Harder": "Difficult",
+      "Insane": "Extreme to Insane",
+      "Demon": "Soul-Crushing or Terrifying or Catastrophic"
+    };
+
+    const etohTogdMap = {
+      "Tower of Anger": "Harder",
+      "Tower of Madness": "Normal",
+      "Tower of Rage": "Hard",
+      "Tower of Keyboard Yeeting": "Insane",
+      "Tower of Heck": "Hard",
+      "Tower of Killjoys": "Harder",
+      "Tower of Screen Punching": "Insane",
+      "Tower of Stress": "Demon",
+      "Tower of Eternal Suffering": "Extreme Demon"
+    };
+
+    function convertGD() {
+      const diff = document.getElementById("gdDiff").value;
+      document.getElementById("gdResult").innerText = `EToH Equivalent: ${gdToetohMap[diff]}`;
+    }
+
+    function convertEToH() {
+      const tower = document.getElementById("etohTower").value;
+      document.getElementById("etohResult").innerText = `GD Equivalent: ${etohTogdMap[tower]}`;
+    }
+
+    // Page switching
+    const gdPage = document.getElementById("gdToetoh");
+    const etohPage = document.getElementById("etohTogd");
+    const gdBtn = document.getElementById("gdToetohBtn");
+    const etohBtn = document.getElementById("etohTogdBtn");
+
+    gdBtn.onclick = () => {
+      gdPage.classList.add("active");
+      etohPage.classList.remove("active");
+      gdBtn.classList.add("active");
+      etohBtn.classList.remove("active");
+    };
+
+    etohBtn.onclick = () => {
+      etohPage.classList.add("active");
+      gdPage.classList.remove("active");
+      etohBtn.classList.add("active");
+      gdBtn.classList.remove("active");
+    };
+
+    // Random Teto GIF at bottom left
+    const gifs = [
+      `<div class="tenor-gif-embed" data-postid="8473005348688012517" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/hatsune-miku-kasane-teto-bubble-gif-8473005348688012517">Hatsune Miku Kasane Teto GIF</a>from <a href="https://tenor.com/search/hatsune+miku-gifs">Hatsune Miku GIFs</a></div>`,
+      `<div class="tenor-gif-embed" data-postid="14171700478944812352" data-share-method="host" data-aspect-ratio="0.562249" data-width="100%"><a href="https://tenor.com/view/birdbrain-teto-pearto-teto-kasane-teto-gif-14171700478944812352">Birdbrain Teto Pearto Sticker</a>from <a href="https://tenor.com/search/birdbrain+teto-stickers">Birdbrain Teto Stickers</a></div>`
+    ];
+    document.getElementById("gifArea").innerHTML = gifs[Math.floor(Math.random() * gifs.length)];
+  </script>
+</body>
+</html>
